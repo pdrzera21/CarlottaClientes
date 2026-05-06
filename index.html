@@ -5,153 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carlotta Brugna - Clientes</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root {
-  --font-sans: system-ui, -apple-system, sans-serif;
-  --color-text-primary: #111827;
-  --color-text-secondary: #4B5563;
-  --color-text-tertiary: #9CA3AF;
-  --color-background-primary: #FFFFFF;
-  --color-background-secondary: #F3F4F6;
-  --color-border-primary: #D1D5DB;
-  --color-border-secondary: #E5E7EB;
-  --color-border-tertiary: #F3F4F6;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --color-text-primary: #1F2937;
+  --color-text-secondary: #6B7280;
+  --color-bg-body: #F3F4F6;
+  --color-bg-card: #FFFFFF;
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-border: #E5E7EB;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-pill: 50px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans);background:#f9fafb;color:var(--color-text-primary)}
-.app{min-height:100vh;display:flex;flex-direction:column;max-width:800px;margin:0 auto;background:var(--color-background-primary);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
-.topbar-title{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;color:#185FA5}
 
-/* Navegação por Abas */
-.tabs{display:flex;background:var(--color-background-secondary);border-bottom:1px solid var(--color-border-tertiary)}
-.tab-btn{flex:1;padding:14px;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--color-text-secondary);cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent}
-.tab-btn.active{color:#185FA5;border-bottom-color:#185FA5;background:white}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); background: var(--color-bg-body); color: var(--color-text-primary); padding: 1rem; }
 
-.save-indicator{font-size:11px;color:var(--color-text-secondary);display:flex;align-items:center;gap:5px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:1rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
-.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px}
-.stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.02em}
-.stat-value{font-size:20px;font-weight:600}
+/* Container Principal */
+.app { 
+  max-width: 900px; 
+  margin: 0 auto; 
+  background: var(--color-bg-card); 
+  border-radius: 24px; 
+  box-shadow: var(--shadow-lg); 
+  overflow: hidden; 
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
 
-.toolbar{display:flex;align-items:center;gap:10px;padding:0.75rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary);flex-wrap:wrap}
-.toolbar input{flex:1;min-width:140px;font-size:13px;padding:8px 12px;border:1px solid var(--color-border-primary);border-radius:var(--border-radius-md);outline:none}
+/* Topbar */
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid var(--color-border); background: #ffffff; }
+.topbar-title { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); display: flex; align-items: center; gap: 10px; }
+.save-indicator { font-size: 0.85rem; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px; background: #F3F4F6; padding: 6px 12px; border-radius: var(--radius-pill); font-weight: 500; }
 
-.add-btn{margin-left:auto;font-size:13px;padding:8px 16px;border-radius:var(--border-radius-md);border:none;background:#185FA5;color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:500}
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 2rem; background: #FAFAFA; border-bottom: 1px solid var(--color-border); }
+.stat { background: var(--color-bg-card); border-radius: var(--radius-md); padding: 1rem 1.25rem; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border); }
+.stat-label { font-size: 0.75rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.5rem; }
+.stat-value { font-size: 1.75rem; font-weight: 700; }
+.v-prospect { color: var(--color-primary); } .v-ativo { color: #059669; } .v-fechado { color: #7C3AED; } .v-perdido { color: #DC2626; }
 
-.list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:10px;flex:1}
-.card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1rem;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s}
-.card:hover{border-color:#185FA5;transform:translateY(-1px);box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
+/* Toolbar */
+.toolbar { display: flex; align-items: center; gap: 12px; padding: 1.5rem 2rem; border-bottom: 1px solid var(--color-border); flex-wrap: wrap; background: #ffffff; }
+.search-box { flex: 1; min-width: 200px; position: relative; }
+.search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #9CA3AF; }
+.search-box input { width: 100%; padding: 10px 14px 10px 40px; border: 1px solid var(--color-border); border-radius: var(--radius-pill); font-size: 0.9rem; outline: none; transition: 0.2s; background: #F9FAFB; }
+.search-box input:focus { border-color: var(--color-primary); background: #ffffff; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
 
-/* Modais */
-.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;padding:1rem;z-index:100}
-.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
-.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
-.modal-body{padding:1.25rem;display:flex;flex-direction:column;gap:15px}
-.field{display:flex;flex-direction:column;gap:5px}
-.field label{font-size:12px;font-weight:600;color:var(--color-text-secondary)}
-.field input, .field select, .field textarea{padding:10px;border:1px solid var(--color-border-primary);border-radius:var(--border-radius-md);font-size:14px;outline:none}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius-pill); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
+.btn-outline { background: #ffffff; border: 1px solid var(--color-border); color: var(--color-text-secondary); }
+.btn-outline.active { background: #1F2937; color: #ffffff; border-color: #1F2937; }
+.btn-primary { background: var(--color-primary); color: #ffffff; box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--color-primary-hover); transform: translateY(-1px); }
+.btn-wa { background: #E8F5E9; color: #059669; border: 1px solid #A7F3D0; }
+.btn-wa:hover { background: #D1FAE5; }
 
-.toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200}
-.toast{background:#111827;color:white;padding:12px 20px;border-radius:var(--border-radius-md);font-size:13px;opacity:0;transition:0.3s}
-.toast.show{opacity:1}
+/* List & Cards */
+.list { padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 1rem; flex: 1; background: #ffffff; }
+.card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.25rem; display: flex; align-items: center; gap: 1.25rem; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
+.card:hover { border-color: var(--color-primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.avatar { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; background: #EFF6FF; color: var(--color-primary); }
+.card-info { flex: 1; min-width: 0; }
+.card-name { font-size: 1.1rem; font-weight: 600; color: #111827; }
+.card-sub { font-size: 0.85rem; color: var(--color-text-secondary); margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+.badge { font-size: 0.75rem; padding: 4px 12px; border-radius: var(--radius-pill); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; }
+.b-prospect { background: #DBEAFE; color: #1E40AF; } .b-ativo { background: #D1FAE5; color: #065F46; } .b-fechado { background: #EDE9FE; color: #5B21B6; } .b-perdido { background: #FEE2E2; color: #991B1B; }
 
-/* Utilitários de Cores */
-.stat-value.blue{color:#185FA5}.stat-value.green{color:#3B6D11}.stat-value.purple{color:#533AB7}.stat-value.red{color:#A32D2D}
-.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
-.badge-disponivel{background:#EAF3DE;color:#27500A}
-.badge-reservado{background:#FEF3C7;color:#92400E}
-.badge-vendido{background:#FCEBEB;color:#791F1F}
+/* Modals */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 1rem; z-index: 100; }
+.modal { background: var(--color-bg-card); border-radius: 24px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid var(--color-border); background: #FAFAFA; position: sticky; top: 0; z-index: 10; }
+.modal-title { font-size: 1.25rem; font-weight: 700; color: #111827; }
+.close-btn { background: #F3F4F6; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #4B5563; transition: 0.2s; }
+.close-btn:hover { background: #E5E7EB; color: #111827; }
+.modal-body { padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* Form Fields */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 0.85rem; font-weight: 600; color: #4B5563; }
+.field input, .field select, .field textarea { font-family: var(--font-sans); font-size: 0.95rem; padding: 12px 14px; border: 1px solid #D1D5DB; border-radius: 12px; background: #FFFFFF; outline: none; transition: 0.2s; color: #111827; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+/* Modal Detail Adjustments */
+.detail-section { padding: 1.5rem 2rem; border-bottom: 1px solid var(--color-border); }
+.detail-title { font-size: 0.8rem; font-weight: 700; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.detail-item { display: flex; flex-direction: column; gap: 4px; }
+.detail-lbl { font-size: 0.85rem; color: var(--color-text-secondary); font-weight: 500; }
+.detail-val { font-size: 1rem; color: #111827; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+.modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; gap: 12px; background: #FAFAFA; position: sticky; bottom: 0; }
+
+.toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; }
+.toast { background: #111827; color: white; padding: 14px 24px; border-radius: var(--radius-pill); font-size: 0.95rem; font-weight: 500; opacity: 0; transition: 0.3s; transform: translateY(20px); box-shadow: var(--shadow-lg); }
+.toast.show { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
 <div class="app">
   <div class="topbar">
-    <div class="topbar-title">Carlotta Brugna</div>
-    <div class="save-indicator" id="save-indicator"><i class="ti ti-cloud-check"></i> Sincronizado</div>
+    <div class="topbar-title"><i class="ti ti-diamond"></i> Carlotta Brugna CRM</div>
+    <div class="save-indicator" id="save-indicator"><i class="ti ti-cloud-check"></i> Sincronizando...</div>
   </div>
 
-  <div class="tabs">
-    <button id="tab-btn-clientes" class="tab-btn active" onclick="switchTab('clientes')">Clientes</button>
-    <button id="tab-btn-imoveis" class="tab-btn" onclick="switchTab('imoveis')">Imóveis</button>
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Prospects</div><div class="stat-value v-prospect" id="st-prospect">0</div></div>
+    <div class="stat"><div class="stat-label">Ativos</div><div class="stat-value v-ativo" id="st-ativo">0</div></div>
+    <div class="stat"><div class="stat-label">Fechados</div><div class="stat-value v-fechado" id="st-fechado">0</div></div>
+    <div class="stat"><div class="stat-label">Perdidos</div><div class="stat-value v-perdido" id="st-perdido">0</div></div>
   </div>
 
-  <div id="section-clientes">
-    <div class="stats">
-      <div class="stat"><div class="stat-label">Prospects</div><div class="stat-value blue" id="st-prospect">0</div></div>
-      <div class="stat"><div class="stat-label">Ativos</div><div class="stat-value green" id="st-ativo">0</div></div>
-      <div class="stat"><div class="stat-label">Fechados</div><div class="stat-value purple" id="st-fechado">0</div></div>
-      <div class="stat"><div class="stat-label">Perdidos</div><div class="stat-value red" id="st-perdido">0</div></div>
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="ti ti-search"></i>
+      <input type="text" id="search" placeholder="Buscar por nome ou bairro..." oninput="render()">
     </div>
-    <div class="toolbar">
-      <input type="text" id="search-clientes" placeholder="Buscar cliente..." oninput="renderClientes()">
-      <button class="add-btn" onclick="openModal('cliente')"><i class="ti ti-plus"></i> Novo Cliente</button>
-    </div>
-    <div class="list" id="list-clientes"></div>
+    
+    <button class="btn btn-outline active" onclick="setFilter('all', this)">Todos</button>
+    <button class="btn btn-outline" onclick="setFilter('Prospect', this)">Prospects</button>
+    <button class="btn btn-outline" onclick="setFilter('Ativo', this)">Ativos</button>
+    
+    <button class="btn btn-wa" style="margin-left: auto;" onclick="enviarResumoWhatsApp()">
+      <i class="ti ti-brand-whatsapp"></i> Lembretes de Hoje
+    </button>
+    <button class="btn btn-primary" onclick="openAdd()">
+      <i class="ti ti-user-plus"></i> Novo Cliente
+    </button>
   </div>
 
-  <div id="section-imoveis" style="display:none">
-    <div class="stats">
-      <div class="stat"><div class="stat-label">Disponíveis</div><div class="stat-value green" id="st-disp">0</div></div>
-      <div class="stat"><div class="stat-label">Reservados</div><div class="stat-value purple" id="st-res">0</div></div>
-      <div class="stat"><div class="stat-label">Vendidos</div><div class="stat-value red" id="st-vend">0</div></div>
-      <div class="stat"><div class="stat-label">Total</div><div class="stat-value blue" id="st-total-imovel">0</div></div>
-    </div>
-    <div class="toolbar">
-      <input type="text" id="search-imoveis" placeholder="Buscar por bairro ou título..." oninput="renderImoveis()">
-      <button class="add-btn" onclick="openModal('imovel')"><i class="ti ti-building"></i> Novo Imóvel</button>
-    </div>
-    <div class="list" id="list-imoveis"></div>
+  <div class="list" id="list">
+    <div style="text-align:center; padding: 3rem; color: #9CA3AF;"><i class="ti ti-loader ti-spin" style="font-size: 2rem;"></i><br>Carregando...</div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-cliente">
+<div class="modal-overlay" id="modal-form">
   <div class="modal">
-    <div class="modal-header"><span style="font-weight:600" id="title-cliente">Novo Cliente</span><button onclick="closeModal('cliente')" style="border:none;background:none;cursor:pointer"><i class="ti ti-x"></i></button></div>
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Novo Cliente</div>
+      <button class="close-btn" onclick="closeModal('form')"><i class="ti ti-x"></i></button>
+    </div>
     <div class="modal-body">
-        <div class="row2">
-            <div class="field"><label>Nome</label><input id="c-nome" type="text"></div>
-            <div class="field"><label>Telefone</label><input id="c-tel" type="text"></div>
+      <div class="row2">
+        <div class="field"><label>Nome Completo</label><input id="f-nome" type="text" placeholder="Ex: João da Silva"></div>
+        <div class="field"><label>Telefone / WhatsApp</label><input id="f-tel" type="text" placeholder="(11) 99999-9999" oninput="maskPhone(event)" maxlength="15"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="email@exemplo.com"></div>
+        <div class="field"><label>Origem</label>
+          <select id="f-origem">
+            <option value="">Selecione...</option>
+            <option>Indicação</option><option>Instagram</option><option>Site</option><option>WhatsApp</option><option>Portais (ZAP/OLX)</option>
+          </select>
         </div>
-        <div class="row2">
-            <div class="field"><label>Status</label><select id="c-status"><option>Prospect</option><option>Ativo</option><option>Fechado</option><option>Perdido</option></select></div>
-            <div class="field"><label>Temperatura</label><select id="c-temp"><option>🔥 Quente</option><option>🌡️ Morno</option><option>❄️ Frio</option></select></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Status</label>
+          <select id="f-status"><option>Prospect</option><option>Ativo</option><option>Fechado</option><option>Perdido</option></select>
         </div>
-        <div class="row2">
-            <div class="field"><label>Operação</label><select id="c-op"><option>Compra</option><option>Locação</option></select></div>
-            <div class="field"><label>Orçamento</label><input id="c-orcamento" type="text" placeholder="Ex: 500.000"></div>
+        <div class="field"><label>Temperatura</label>
+          <select id="f-temp"><option>🔥 Quente</option><option>🌡️ Morno</option><option>❄️ Frio</option></select>
         </div>
-        <div class="field"><label>Bairro Desejado</label><input id="c-bairro" type="text"></div>
-        <div class="field"><label>Observações</label><textarea id="c-obs"></textarea></div>
-        <button class="add-btn" style="width:100%;justify-content:center" onclick="saveCliente()">Salvar Cliente</button>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Operação</label>
+          <select id="f-op"><option>Compra</option><option>Locação</option></select>
+        </div>
+        <div class="field"><label>Budget (Orçamento Máx.)</label><input id="f-orcamento" type="text" placeholder="R$ 0,00" oninput="maskCurrency(event)"></div>
+      </div>
+      
+      <div style="background: #F9FAFB; padding: 1.25rem; border-radius: 16px; border: 1px solid #E5E7EB; margin-top: 10px;">
+          <h4 style="margin-bottom: 15px; color: #374151; font-size: 0.9rem;">Preferências do Imóvel</h4>
+          <div class="field" style="margin-bottom: 12px;"><label>Bairro(s) de interesse</label><input id="f-bairro" type="text" placeholder="Ex: Moema, Jardins..."></div>
+          <div class="row3">
+            <div class="field"><label>Quartos</label>
+              <select id="f-quartos"><option>Indiferente</option><option>1</option><option>2</option><option>3</option><option>4+</option></select>
+            </div>
+            <div class="field"><label>Vagas</label>
+              <select id="f-vagas"><option>Indiferente</option><option>1</option><option>2</option><option>3</option><option>4+</option></select>
+            </div>
+            <div class="field"><label>Piscina</label>
+              <select id="f-piscina"><option>Indiferente</option><option>Sim</option><option>Não</option></select>
+            </div>
+          </div>
+      </div>
+
+      <div class="field"><label>Data do Próximo Contato (Follow-up)</label><input id="f-followup" type="date"></div>
+      <div class="field"><label>Observações</label><textarea id="f-obs" rows="3" placeholder="Detalhes da família, urgência, preferências..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('form')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveClient()">Salvar Cliente</button>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-imovel">
-  <div class="modal">
-    <div class="modal-header"><span style="font-weight:600" id="title-imovel">Novo Imóvel</span><button onclick="closeModal('imovel')" style="border:none;background:none;cursor:pointer"><i class="ti ti-x"></i></button></div>
-    <div class="modal-body">
-        <div class="field"><label>Título do Imóvel</label><input id="i-titulo" type="text" placeholder="Ex: Apto 2 dorms Santana"></div>
-        <div class="row2">
-            <div class="field"><label>Bairro</label><input id="i-bairro" type="text"></div>
-            <div class="field"><label>Valor</label><input id="i-valor" type="text"></div>
-        </div>
-        <div class="row2">
-            <div class="field"><label>Operação</label><select id="i-op"><option>Compra</option><option>Locação</option></select></div>
-            <div class="field"><label>Status</label><select id="i-status"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
-        </div>
-        <div class="row2">
-            <div class="field"><label>Quartos</label><input id="i-quartos" type="number"></div>
-            <div class="field"><label>Vagas</label><input id="i-vagas" type="number"></div>
-        </div>
-        <div class="field"><label>Descrição / Detalhes</label><textarea id="i-desc"></textarea></div>
-        <button class="add-btn" style="width:100%;justify-content:center" onclick="saveImovel()">Salvar Imóvel</button>
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal" style="background: #FAFAFA;">
+    <div class="modal-header">
+      <div class="modal-title">Ficha do Cliente</div>
+      <button class="close-btn" onclick="closeModal('detail')"><i class="ti ti-x"></i></button>
     </div>
+    <div id="detail-content" style="background: #FFFFFF;"></div>
   </div>
 </div>
 
@@ -161,7 +226,7 @@ body{font-family:var(--font-sans);background:#f9fafb;color:var(--color-text-prim
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
 
 <script>
-// CONFIGURAÇÃO DO SEU FIREBASE (MANTENHA AS SUAS CHAVES AQUI)
+// CONFIGURAÇÃO FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyBPqv0gnRvkb9FvEJOVb2OI3g3CkRITsjQ",
   authDomain: "crm-corretora-85045.firebaseapp.com",
@@ -175,135 +240,309 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-let clientes = [];
-let imoveis = [];
-let currentTab = 'clientes';
+let clients = [];
+let editId = null;
+let filter = 'all';
 
-// Alternar entre abas
-function switchTab(tab) {
-    currentTab = tab;
-    document.getElementById('section-clientes').style.display = tab === 'clientes' ? 'block' : 'none';
-    document.getElementById('section-imoveis').style.display = tab === 'imoveis' ? 'block' : 'none';
+// MASCARAS
+function maskPhone(e) {
+    let v = e.target.value.replace(/\D/g, "");
+    v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+    v = v.replace(/(\d)(\d{4})$/, "$1-$2");
+    e.target.value = v;
+}
+
+function maskCurrency(e) {
+    let v = e.target.value.replace(/\D/g, "");
+    if(v.length === 0) { e.target.value = ''; return; }
+    v = (v / 100).toFixed(2) + '';
+    v = v.replace(".", ",");
+    v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    e.target.value = 'R$ ' + v;
+}
+
+// UTILITARIOS
+const getInitials = n => n.split(' ').slice(0,2).map(x=>x[0]||'').join('').toUpperCase();
+const bClass = s => ({Prospect:'b-prospect', Ativo:'b-ativo', Fechado:'b-fechado', Perdido:'b-perdido'}[s]);
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function setSaveIndicator(state) {
+  const el = document.getElementById('save-indicator');
+  if(state === 'saving') el.innerHTML = '<i class="ti ti-loader ti-spin"></i> Sincronizando...';
+  else if(state === 'saved') el.innerHTML = '<i class="ti ti-cloud-check" style="color:#059669"></i> Salvo na nuvem';
+  else el.innerHTML = '<i class="ti ti-cloud-off" style="color:#DC2626"></i> Erro';
+}
+
+// BANCO DE DADOS
+function loadData() {
+  setSaveIndicator('saving');
+  db.ref('crm_clientes').on('value', snap => {
+    clients = snap.val() || [];
+    render();
+    setSaveIndicator('saved');
+  });
+}
+
+function setFilter(f, btn) {
+  filter = f;
+  document.querySelectorAll('.toolbar .btn-outline').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const today = new Date().toISOString().split('T')[0];
+  
+  const filtered = clients.filter(c => {
+    if(filter !== 'all' && c.status !== filter) return false;
+    if(q && !c.nome.toLowerCase().includes(q) && !(c.bairro||'').toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a,b) => (a.followup || '9999').localeCompare(b.followup || '9999'));
+  
+  const counts = {Prospect:0, Ativo:0, Fechado:0, Perdido:0};
+  clients.forEach(c => counts[c.status]++);
+  
+  document.getElementById('st-prospect').textContent = counts.Prospect;
+  document.getElementById('st-ativo').textContent = counts.Ativo;
+  document.getElementById('st-fechado').textContent = counts.Fechado;
+  document.getElementById('st-perdido').textContent = counts.Perdido;
+  
+  const list = document.getElementById('list');
+  if(!filtered.length) {
+    list.innerHTML = `<div style="text-align:center; padding: 3rem; color: #9CA3AF;"><i class="ti ti-users" style="font-size: 3rem; margin-bottom: 1rem; display:block;"></i>Nenhum cliente encontrado</div>`;
+    return;
+  }
+  
+  list.innerHTML = filtered.map((c, idx) => {
+    const due = c.followup && c.followup <= today && c.status !== 'Fechado' && c.status !== 'Perdido';
+    const realIdx = clients.findIndex(x => x === c); // Pega o ID real no array
     
-    document.getElementById('tab-btn-clientes').classList.toggle('active', tab === 'clientes');
-    document.getElementById('tab-btn-imoveis').classList.toggle('active', tab === 'imoveis');
+    return `
+    <div class="card" onclick="openDetail(${realIdx})">
+      <div class="avatar">${getInitials(c.nome)}</div>
+      <div class="card-info">
+        <div class="card-name">${c.nome}</div>
+        <div class="card-sub"><i class="ti ti-map-pin"></i> ${c.bairro || 'Região não definida'} • ${c.op} • ${c.orcamento || 'S/ Budget'}</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        ${due ? `<span style="font-size:0.75rem; color:#D97706; background:#FEF3C7; padding:4px 10px; border-radius:50px; font-weight:600;"><i class="ti ti-bell-ringing"></i> Ligar</span>` : ''}
+        <span style="font-size:1rem;">${c.temp.split(' ')[0]}</span>
+        <span class="badge ${bClass(c.status)}">${c.status}</span>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// Persistência
-function saveToFirebase(node, data) {
-    db.ref(node).set(data);
-}
+// MODAIS
+function openModal(id) { document.getElementById('modal-'+id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById('modal-'+id).style.display = 'none'; }
 
-// Carregar Dados
-function loadAll() {
-    db.ref('crm_clientes').on('value', snap => {
-        clientes = snap.val() || [];
-        renderClientes();
-    });
-    db.ref('crm_imoveis').on('value', snap => {
-        imoveis = snap.val() || [];
-        renderImoveis();
-    });
-}
-
-// CRUD CLIENTES
-function renderClientes() {
-    const list = document.getElementById('list-clientes');
-    const search = document.getElementById('search-clientes').value.toLowerCase();
-    const filtered = clientes.filter(c => c.nome.toLowerCase().includes(search) || c.bairro.toLowerCase().includes(search));
-    
-    // Atualiza stats
-    const count = {Prospect:0, Ativo:0, Fechado:0, Perdido:0};
-    clientes.forEach(c => count[c.status]++);
-    document.getElementById('st-prospect').textContent = count.Prospect;
-    document.getElementById('st-ativo').textContent = count.Ativo;
-    document.getElementById('st-fechado').textContent = count.Fechado;
-    document.getElementById('st-perdido').textContent = count.Perdido;
-
-    list.innerHTML = filtered.map((c, i) => `
-        <div class="card">
-            <div style="flex:1">
-                <div style="font-weight:600">${c.nome}</div>
-                <div style="font-size:12px; color:var(--color-text-secondary)">${c.bairro} • ${c.op} • R$ ${c.orcamento}</div>
-            </div>
-            <div class="badge">${c.status}</div>
-            <button onclick="deleteData('clientes', ${i})" style="border:none;background:none;color:#A32D2D"><i class="ti ti-trash"></i></button>
-        </div>
-    `).join('');
-}
-
-function saveCliente() {
-    const novo = {
-        nome: document.getElementById('c-nome').value,
-        tel: document.getElementById('c-tel').value,
-        status: document.getElementById('c-status').value,
-        temp: document.getElementById('c-temp').value,
-        op: document.getElementById('c-op').value,
-        orcamento: document.getElementById('c-orcamento').value,
-        bairro: document.getElementById('c-bairro').value,
-        obs: document.getElementById('c-obs').value
-    };
-    clientes.push(novo);
-    saveToFirebase('crm_clientes', clientes);
-    closeModal('cliente');
-}
-
-// CRUD IMÓVEIS
-function renderImoveis() {
-    const list = document.getElementById('list-imoveis');
-    const search = document.getElementById('search-imoveis').value.toLowerCase();
-    const filtered = imoveis.filter(i => i.titulo.toLowerCase().includes(search) || i.bairro.toLowerCase().includes(search));
-
-    const count = {Disponível:0, Reservado:0, Vendido:0};
-    imoveis.forEach(i => count[i.status]++);
-    document.getElementById('st-disp').textContent = count.Disponível;
-    document.getElementById('st-res').textContent = count.Reservado;
-    document.getElementById('st-vend').textContent = count.Vendido;
-    document.getElementById('st-total-imovel').textContent = imoveis.length;
-
-    list.innerHTML = filtered.map((im, index) => `
-        <div class="card">
-            <div style="flex:1">
-                <div style="font-weight:600">${im.titulo}</div>
-                <div style="font-size:12px; color:var(--color-text-secondary)">${im.bairro} • R$ ${im.valor} • ${im.quartos} qtos</div>
-            </div>
-            <div class="badge badge-${im.status.toLowerCase()}">${im.status}</div>
-            <button onclick="deleteData('imoveis', ${index})" style="border:none;background:none;color:#A32D2D"><i class="ti ti-trash"></i></button>
-        </div>
-    `).join('');
-}
-
-function saveImovel() {
-    const novo = {
-        titulo: document.getElementById('i-titulo').value,
-        bairro: document.getElementById('i-bairro').value,
-        valor: document.getElementById('i-valor').value,
-        op: document.getElementById('i-op').value,
-        status: document.getElementById('i-status').value,
-        quartos: document.getElementById('i-quartos').value,
-        vagas: document.getElementById('i-vagas').value,
-        desc: document.getElementById('i-desc').value
-    };
-    imoveis.push(novo);
-    saveToFirebase('crm_imoveis', imoveis);
-    closeModal('imovel');
-}
-
-// Auxiliares
-function openModal(m) { document.getElementById('modal-'+m).style.display = 'flex'; }
-function closeModal(m) { document.getElementById('modal-'+m).style.display = 'none'; }
-function deleteData(type, index) {
-    if(!confirm('Deseja excluir?')) return;
-    if(type === 'clientes') {
-        clientes.splice(index, 1);
-        saveToFirebase('crm_clientes', clientes);
-    } else {
-        imoveis.splice(index, 1);
-        saveToFirebase('crm_imoveis', imoveis);
+function openAdd() {
+  editId = null;
+  document.getElementById('modal-title').textContent = 'Novo Cliente';
+  const fields = ['nome','tel','email','origem','status','temp','op','orcamento','bairro','quartos','vagas','piscina','followup','obs'];
+  fields.forEach(k => {
+    const el = document.getElementById('f-'+k);
+    if(el) {
+        if(k==='status') el.value = 'Prospect';
+        else if(k==='temp') el.value = '🔥 Quente';
+        else if(k==='op') el.value = 'Compra';
+        else if(['quartos','vagas','piscina'].includes(k)) el.value = 'Indiferente';
+        else el.value = '';
     }
+  });
+  openModal('form');
 }
 
-loadAll();
+function saveClient() {
+  const nome = document.getElementById('f-nome').value.trim();
+  if(!nome) return showToast('O nome é obrigatório!');
+  
+  const data = {
+    nome: nome,
+    tel: document.getElementById('f-tel').value,
+    email: document.getElementById('f-email').value,
+    origem: document.getElementById('f-origem').value,
+    status: document.getElementById('f-status').value,
+    temp: document.getElementById('f-temp').value,
+    op: document.getElementById('f-op').value,
+    orcamento: document.getElementById('f-orcamento').value,
+    bairro: document.getElementById('f-bairro').value,
+    quartos: document.getElementById('f-quartos').value,
+    vagas: document.getElementById('f-vagas').value,
+    piscina: document.getElementById('f-piscina').value,
+    followup: document.getElementById('f-followup').value,
+    obs: document.getElementById('f-obs').value
+  };
+  
+  if(editId !== null) clients[editId] = data;
+  else clients.push(data);
+  
+  db.ref('crm_clientes').set(clients);
+  closeModal('form');
+  showToast(editId !== null ? 'Cliente atualizado!' : 'Cliente salvo com sucesso!');
+}
+
+function openDetail(idx) {
+  const c = clients[idx];
+  const fmt = d => d ? d.split('-').reverse().join('/') : '—';
+  
+  document.getElementById('detail-content').innerHTML = `
+    <div style="padding: 2rem; border-bottom: 1px solid var(--color-border); display:flex; align-items:center; gap:1.5rem;">
+      <div class="avatar" style="width:64px; height:64px; font-size:1.5rem;">${getInitials(c.nome)}</div>
+      <div>
+        <h2 style="font-size:1.5rem; color:#111827; margin-bottom:6px;">${c.nome}</h2>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="badge ${bClass(c.status)}">${c.status}</span>
+          <span style="font-weight:500; font-size:0.9rem; color:#4B5563;">${c.temp}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="detail-section">
+      <div class="detail-title">Contato e Origem</div>
+      <div class="detail-grid">
+        <div class="detail-item"><span class="detail-lbl">Telefone / Whats</span><span class="detail-val"><i class="ti ti-phone"></i> ${c.tel || '—'}</span></div>
+        <div class="detail-item"><span class="detail-lbl">Email</span><span class="detail-val"><i class="ti ti-mail"></i> ${c.email || '—'}</span></div>
+        <div class="detail-item"><span class="detail-lbl">Origem</span><span class="detail-val"><i class="ti ti-speakerphone"></i> ${c.origem || '—'}</span></div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-title">Busca do Imóvel</div>
+      <div class="detail-grid" style="margin-bottom: 1rem;">
+        <div class="detail-item"><span class="detail-lbl">Operação</span><span class="detail-val"><i class="ti ti-key"></i> ${c.op || '—'}</span></div>
+        <div class="detail-item"><span class="detail-lbl">Budget (Orçamento)</span><span class="detail-val" style="color:#059669"><i class="ti ti-cash"></i> ${c.orcamento || '—'}</span></div>
+        <div class="detail-item" style="grid-column: span 2;"><span class="detail-lbl">Bairro / Região</span><span class="detail-val"><i class="ti ti-map-pin"></i> ${c.bairro || '—'}</span></div>
+      </div>
+      <div style="display:flex; gap:15px; background:#F9FAFB; padding:15px; border-radius:12px; border:1px solid #E5E7EB;">
+         <div style="flex:1"><span class="detail-lbl">Quartos</span><br><strong style="font-size:1.1rem">${c.quartos || '-'}</strong></div>
+         <div style="flex:1; border-left:1px solid #E5E7EB; padding-left:15px;"><span class="detail-lbl">Vagas</span><br><strong style="font-size:1.1rem">${c.vagas || '-'}</strong></div>
+         <div style="flex:1; border-left:1px solid #E5E7EB; padding-left:15px;"><span class="detail-lbl">Piscina</span><br><strong style="font-size:1.1rem">${c.piscina || '-'}</strong></div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-title">Acompanhamento</div>
+      <div class="detail-grid" style="display:flex; flex-direction:column;">
+        <div class="detail-item"><span class="detail-lbl">Data do Follow-up</span><span class="detail-val"><i class="ti ti-calendar"></i> ${fmt(c.followup)}</span></div>
+        <div class="detail-item" style="margin-top:10px;"><span class="detail-lbl">Observações</span><div style="background:#F9FAFB; padding:15px; border-radius:12px; border:1px solid #E5E7EB; margin-top:6px; font-size:0.95rem; line-height:1.5;">${c.obs ? c.obs.replace(/\n/g, '<br>') : 'Nenhuma observação.'}</div></div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" style="color:#DC2626; border-color:#FECACA; margin-right:auto;" onclick="deleteClient(${idx})"><i class="ti ti-trash"></i> Apagar</button>
+      <button class="btn btn-outline" onclick="gerarPDF(${idx})"><i class="ti ti-file-pdf"></i> Gerar PDF</button>
+      <button class="btn btn-outline" onclick="openEdit(${idx})"><i class="ti ti-edit"></i> Editar</button>
+      ${c.tel ? `<a href="https://wa.me/55${c.tel.replace(/\D/g,'')}" target="_blank" class="btn btn-primary" style="text-decoration:none;"><i class="ti ti-brand-whatsapp"></i> Chamar</a>` : ''}
+    </div>
+  `;
+  openModal('detail');
+}
+
+function openEdit(idx) {
+  closeModal('detail');
+  editId = idx;
+  const c = clients[idx];
+  document.getElementById('modal-title').textContent = 'Editar Cliente';
+  
+  const fields = ['nome','tel','email','origem','status','temp','op','orcamento','bairro','quartos','vagas','piscina','followup','obs'];
+  fields.forEach(k => {
+    const el = document.getElementById('f-'+k);
+    if(el) el.value = c[k] || '';
+  });
+  
+  openModal('form');
+}
+
+function deleteClient(idx) {
+  if(!confirm('Tem certeza que deseja apagar este cliente?')) return;
+  clients.splice(idx, 1);
+  db.ref('crm_clientes').set(clients);
+  closeModal('detail');
+  showToast('Cliente removido!');
+}
+
+// === GERAR PDF ===
+function gerarPDF(idx) {
+  const c = clients[idx];
+  const fmt = d => d ? d.split('-').reverse().join('/') : '—';
+  
+  const element = document.createElement('div');
+  element.innerHTML = `
+      <div style="font-family: 'Segoe UI', sans-serif; padding: 40px; color: #333; max-width: 800px; margin: 0 auto;">
+          <div style="border-bottom: 3px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
+              <h1 style="color: #1F2937; margin: 0; font-size: 28px;">${c.nome}</h1>
+              <p style="color: #6B7280; font-size: 16px; margin-top: 8px;">Ficha de Perfil do Cliente</p>
+          </div>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+              <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #E5E7EB; width: 50%;"><strong>Status:</strong> ${c.status}</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #E5E7EB; width: 50%;"><strong>Temperatura:</strong> ${c.temp}</td>
+              </tr>
+              <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #E5E7EB;"><strong>Telefone:</strong> ${c.tel || '—'}</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #E5E7EB;"><strong>Origem:</strong> ${c.origem || '—'}</td>
+              </tr>
+          </table>
+
+          <h3 style="color: #2563EB; margin-bottom: 15px; font-size: 18px;">Busca de Imóvel</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #F9FAFB;">
+              <tr>
+                  <td style="padding: 15px; border: 1px solid #E5E7EB;"><strong>Operação:</strong><br>${c.op || '—'}</td>
+                  <td style="padding: 15px; border: 1px solid #E5E7EB;"><strong>Budget:</strong><br>${c.orcamento || '—'}</td>
+                  <td style="padding: 15px; border: 1px solid #E5E7EB;"><strong>Bairro(s):</strong><br>${c.bairro || '—'}</td>
+              </tr>
+              <tr>
+                  <td style="padding: 15px; border: 1px solid #E5E7EB;"><strong>Quartos:</strong> ${c.quartos || '—'}</td>
+                  <td style="padding: 15px; border: 1px solid #E5E7EB;"><strong>Vagas:</strong> ${c.vagas || '—'}</td>
+                  <td style="padding: 15px; border: 1px solid #E5E7EB;"><strong>Piscina:</strong> ${c.piscina || '—'}</td>
+              </tr>
+          </table>
+
+          <h3 style="color: #2563EB; margin-bottom: 15px; font-size: 18px;">Anotações</h3>
+          <p style="background: #F9FAFB; padding: 20px; border: 1px solid #E5E7EB; border-radius: 8px; line-height: 1.6;">
+              ${c.obs ? c.obs.replace(/\n/g, '<br>') : 'Nenhuma observação registrada.'}
+          </p>
+      </div>
+  `;
+  
+  const opt = {
+      margin:       0,
+      filename:     `Ficha_${c.nome.replace(/\s+/g, '_')}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+  
+  html2pdf().set(opt).from(element).save();
+  showToast('Baixando PDF...');
+}
+
+// === WHATSAPP RESUMO ===
+function enviarResumoWhatsApp() {
+  const today = new Date().toISOString().split('T')[0];
+  const fHoje = clients.filter(c => c.followup === today && c.status !== 'Fechado' && c.status !== 'Perdido');
+  
+  if(fHoje.length === 0) return showToast('Nenhum contato pendente para hoje!');
+  
+  let texto = `*🔔 Lembretes de Hoje*\n\n`;
+  fHoje.forEach(c => {
+      texto += `👤 *${c.nome}*\n📞 ${c.tel || 'S/ telefone'}\n📍 ${c.bairro || 'S/ região'} | 💰 ${c.orcamento || 'S/ budget'}\n📝 ${c.obs ? 'Tem anotação no sistema' : 'Sem anotações'}\n\n`;
+  });
+  
+  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
+}
+
+loadData();
 </script>
 </body>
 </html>
