@@ -97,7 +97,7 @@ body{font-family:var(--font-sans);background:#f9fafb;color:var(--color-text-prim
   <div class="topbar">
     <div class="topbar-title"><i class="ti ti-building-estate"></i> Clientes — Imóveis</div>
     <div style="display:flex;align-items:center;gap:12px">
-      <span class="save-indicator" id="save-indicator"><i class="ti ti-cloud-check"></i> Dados salvos</span>
+      <span class="save-indicator" id="save-indicator"><i class="ti ti-cloud-check"></i> Conectando...</span>
       <span style="font-size:12px;color:var(--color-text-secondary)" id="total-label">— clientes</span>
     </div>
   </div>
@@ -195,7 +195,26 @@ body{font-family:var(--font-sans);background:#f9fafb;color:var(--color-text-prim
   <div class="toast" id="toast"></div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+
 <script>
+// Configuração com as suas chaves reais
+const firebaseConfig = {
+  apiKey: "AIzaSyBPqv0gnRvkb9FvEJOVb2OI3g3CkRITsjQ",
+  authDomain: "crm-corretora-85045.firebaseapp.com",
+  databaseURL: "https://crm-corretora-85045-default-rtdb.firebaseio.com",
+  projectId: "crm-corretora-85045",
+  storageBucket: "crm-corretora-85045.firebasestorage.app",
+  messagingSenderId: "344026315552",
+  appId: "1:344026315552:web:c5a0f9d93fd9b9b6bfb545",
+  measurementId: "G-JPBPHX6764"
+};
+
+// Inicializa o Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
 let clients=[];
 let editId=null;
 let filter='all';
@@ -216,38 +235,40 @@ function showToast(msg,ok=true){
 
 function setSaveIndicator(state){
   const el=document.getElementById('save-indicator');
-  if(state==='saving'){el.innerHTML='<i class="ti ti-loader"></i> Salvando...';}
-  else if(state==='saved'){el.innerHTML='<i class="ti ti-cloud-check"></i> Dados salvos no navegador';}
-  else{el.innerHTML='<i class="ti ti-cloud-off"></i> Erro ao salvar';}
+  if(state==='saving'){el.innerHTML='<i class="ti ti-loader"></i> Sincronizando...';}
+  else if(state==='saved'){el.innerHTML='<i class="ti ti-cloud-check"></i> Nuvem atualizada';}
+  else{el.innerHTML='<i class="ti ti-cloud-off"></i> Erro na nuvem';}
 }
 
-// === NOVO SISTEMA DE ARMAZENAMENTO VIA LOCALSTORAGE ===
+// Persistência no Firebase
 async function persist(){
   setSaveIndicator('saving');
   try{
-    localStorage.setItem('crm_clientes', JSON.stringify({clients, nextId}));
-    setTimeout(() => setSaveIndicator('saved'), 300); // Pequeno atraso visual
+    await database.ref('crm_clientes').set({clients, nextId});
+    setTimeout(() => setSaveIndicator('saved'), 300);
   }catch(e){
     setSaveIndicator('error');
     showToast('Erro ao salvar dados', false);
   }
 }
 
-async function loadData(){
-  try{
-    const savedData = localStorage.getItem('crm_clientes');
-    if(savedData){
-      const d = JSON.parse(savedData);
-      clients = d.clients || [];
-      nextId = d.nextId || clients.length + 1;
+// Carregamento em tempo real do Firebase
+function loadData(){
+  setSaveIndicator('saving');
+  
+  database.ref('crm_clientes').on('value', (snapshot) => {
+    const data = snapshot.val();
+    if(data){
+      clients = data.clients || [];
+      nextId = data.nextId || clients.length + 1;
+    }else{
+      clients = [];
+      nextId = 1;
     }
-  }catch(e){
-    clients = [];
-    nextId = 1;
-  }
-  render();
+    render();
+    setSaveIndicator('saved');
+  });
 }
-// =======================================================
 
 function setFilter(f,btn){
   filter=f;
@@ -330,7 +351,6 @@ async function saveClient(){
   }
   closeModal();
   await persist();
-  render();
 }
 
 function openDetail(id){
@@ -394,10 +414,8 @@ async function deleteClient(id){
   closeDetail();
   await persist();
   showToast('Cliente removido');
-  render();
 }
 
-// Inicializa a aplicação
 loadData();
 </script>
 </body>
