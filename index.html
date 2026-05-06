@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRM Corretora</title>
+<title>Carlotta Brugna - Clientes</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 :root {
@@ -13,8 +13,6 @@
   --color-text-tertiary: #9CA3AF;
   --color-background-primary: #FFFFFF;
   --color-background-secondary: #F3F4F6;
-  --color-background-warning: #FEF3C7;
-  --color-text-warning: #92400E;
   --color-border-primary: #D1D5DB;
   --color-border-secondary: #E5E7EB;
   --color-border-tertiary: #F3F4F6;
@@ -23,183 +21,147 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);background:#f9fafb;color:var(--color-text-primary)}
-.app{min-height:600px;display:flex;flex-direction:column;max-width:800px;margin:0 auto;background:var(--color-background-primary);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.app{min-height:100vh;display:flex;flex-direction:column;max-width:800px;margin:0 auto;background:var(--color-background-primary);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
-.topbar-title{font-size:16px;font-weight:500;display:flex;align-items:center;gap:8px}
-.topbar-title i{font-size:20px;color:#185FA5}
+.topbar-title{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;color:#185FA5}
+
+/* Navegação por Abas */
+.tabs{display:flex;background:var(--color-background-secondary);border-bottom:1px solid var(--color-border-tertiary)}
+.tab-btn{flex:1;padding:14px;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--color-text-secondary);cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent}
+.tab-btn.active{color:#185FA5;border-bottom-color:#185FA5;background:white}
+
 .save-indicator{font-size:11px;color:var(--color-text-secondary);display:flex;align-items:center;gap:5px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:1rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
 .stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px}
-.stat-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
-.stat-value{font-size:22px;font-weight:500}
-.stat-value.prospect{color:#185FA5}.stat-value.ativo{color:#3B6D11}.stat-value.fechado{color:#533AB7}.stat-value.perdido{color:#A32D2D}
+.stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.02em}
+.stat-value{font-size:20px;font-weight:600}
+
 .toolbar{display:flex;align-items:center;gap:10px;padding:0.75rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary);flex-wrap:wrap}
-.toolbar input{flex:1;min-width:140px;font-size:13px;padding:6px 10px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)}
-.filter-btn{font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;color:var(--color-text-secondary);transition:all 0.15s}
-.filter-btn.active{color:#fff;border-color:transparent}
-.filter-btn.all.active{background:#444}.filter-btn.prospect.active{background:#185FA5}.filter-btn.ativo.active{background:#3B6D11}.filter-btn.fechado.active{background:#533AB7}.filter-btn.perdido.active{background:#A32D2D}
-.add-btn{margin-left:auto;font-size:13px;padding:6px 14px;border-radius:var(--border-radius-md);border:none;background:#185FA5;color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px}
-.list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:10px}
-.card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color 0.15s}
-.card:hover{border-color:#185FA5}
-.avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
-.av-prospect{background:#E6F1FB;color:#185FA5}.av-ativo{background:#EAF3DE;color:#3B6D11}.av-fechado{background:#EEEDFE;color:#533AB7}.av-perdido{background:#FCEBEB;color:#A32D2D}
-.card-info{flex:1;min-width:0}
-.card-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-sub{font-size:12px;color:var(--color-text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;flex-shrink:0}
-.badge.prospect{background:#E6F1FB;color:#0C447C}.badge.ativo{background:#EAF3DE;color:#27500A}.badge.fechado{background:#EEEDFE;color:#3C3489}.badge.perdido{background:#FCEBEB;color:#791F1F}
-.card-meta{display:flex;align-items:center;gap:12px}
-.followup-tag{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--color-background-warning);color:var(--color-text-warning)}
-.empty{text-align:center;padding:3rem;color:var(--color-text-secondary);font-size:14px}
-.loading{text-align:center;padding:3rem;color:var(--color-text-secondary);font-size:14px}
+.toolbar input{flex:1;min-width:140px;font-size:13px;padding:8px 12px;border:1px solid var(--color-border-primary);border-radius:var(--border-radius-md);outline:none}
 
+.add-btn{margin-left:auto;font-size:13px;padding:8px 16px;border-radius:var(--border-radius-md);border:none;background:#185FA5;color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:500}
+
+.list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:10px;flex:1}
+.card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1rem;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s}
+.card:hover{border-color:#185FA5;transform:translateY(-1px);box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
+
+/* Modais */
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;padding:1rem;z-index:100}
-.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 10px 25px rgba(0,0,0,0.2)}
-.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
-.modal-title{font-size:15px;font-weight:500}
-.close-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:20px;display:flex;align-items:center}
-.modal-body{padding:1.25rem;display:flex;flex-direction:column;gap:14px}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
+.modal-body{padding:1.25rem;display:flex;flex-direction:column;gap:15px}
 .field{display:flex;flex-direction:column;gap:5px}
-.field label{font-size:12px;color:var(--color-text-secondary);font-weight:500}
-.field input,.field select,.field textarea{font-size:13px;padding:8px 10px;border:1px solid var(--color-border-primary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);width:100%;outline:none}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:#185FA5}
-.field textarea{resize:vertical;min-height:60px}
+.field label{font-size:12px;font-weight:600;color:var(--color-text-secondary)}
+.field input, .field select, .field textarea{padding:10px;border:1px solid var(--color-border-primary);border-radius:var(--border-radius-md);font-size:14px;outline:none}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal-footer{padding:1rem 1.25rem;border-top:1px solid var(--color-border-tertiary);display:flex;justify-content:flex-end;gap:10px}
-.btn-cancel{background:none;border:1px solid var(--color-border-primary);border-radius:var(--border-radius-md);padding:8px 16px;cursor:pointer;font-size:13px;color:var(--color-text-secondary)}
-.btn-save{background:#185FA5;color:#fff;border:none;border-radius:var(--border-radius-md);padding:8px 20px;cursor:pointer;font-size:13px;font-weight:500}
 
-.detail-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;padding:1rem;z-index:100}
-.detail{background:var(--color-background-primary);border-radius:var(--border-radius-lg);width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 10px 25px rgba(0,0,0,0.2)}
-.detail-top{padding:1.25rem;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--color-border-tertiary)}
-.detail-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500}
-.detail-name{font-size:16px;font-weight:500}
-.detail-section{padding:1rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary)}
-.detail-section-title{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;font-weight:600}
-.detail-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;font-size:13px}
-.detail-row i{font-size:16px;color:var(--color-text-secondary);margin-top:1px;flex-shrink:0}
-.detail-label{color:var(--color-text-secondary);min-width:80px;flex-shrink:0}
-.detail-val{color:var(--color-text-primary);font-weight:500}
-.detail-actions{padding:1rem 1.25rem;display:flex;gap:10px;flex-wrap:wrap}
-.btn-edit{background:none;border:1px solid var(--color-border-primary);border-radius:var(--border-radius-md);padding:8px 16px;cursor:pointer;font-size:13px;color:var(--color-text-primary);display:flex;align-items:center;gap:6px}
-.btn-delete{background:none;border:1px solid #F09595;border-radius:var(--border-radius-md);padding:8px 16px;cursor:pointer;font-size:13px;color:#A32D2D;display:flex;align-items:center;gap:6px;margin-left:auto}
-.btn-wa{background:#3B6D11;color:#fff;border:none;border-radius:var(--border-radius-md);padding:8px 16px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;text-decoration:none}
-
-.toast-container{position:fixed;bottom:1rem;right:1rem;z-index:200}
-.toast{background:#27500A;color:#EAF3DE;font-size:13px;padding:10px 16px;border-radius:var(--border-radius-md);opacity:0;transition:opacity 0.3s;pointer-events:none;box-shadow:0 4px 6px rgba(0,0,0,0.1)}
+.toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200}
+.toast{background:#111827;color:white;padding:12px 20px;border-radius:var(--border-radius-md);font-size:13px;opacity:0;transition:0.3s}
 .toast.show{opacity:1}
+
+/* Utilitários de Cores */
+.stat-value.blue{color:#185FA5}.stat-value.green{color:#3B6D11}.stat-value.purple{color:#533AB7}.stat-value.red{color:#A32D2D}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.badge-disponivel{background:#EAF3DE;color:#27500A}
+.badge-reservado{background:#FEF3C7;color:#92400E}
+.badge-vendido{background:#FCEBEB;color:#791F1F}
 </style>
 </head>
 <body>
 
-<div class="app" id="app">
+<div class="app">
   <div class="topbar">
-    <div class="topbar-title"><i class="ti ti-building-estate"></i> Clientes — Imóveis</div>
-    <div style="display:flex;align-items:center;gap:12px">
-      <span class="save-indicator" id="save-indicator"><i class="ti ti-cloud-check"></i> Conectando...</span>
-      <span style="font-size:12px;color:var(--color-text-secondary)" id="total-label">— clientes</span>
+    <div class="topbar-title">Carlotta Brugna</div>
+    <div class="save-indicator" id="save-indicator"><i class="ti ti-cloud-check"></i> Sincronizado</div>
+  </div>
+
+  <div class="tabs">
+    <button id="tab-btn-clientes" class="tab-btn active" onclick="switchTab('clientes')">Clientes</button>
+    <button id="tab-btn-imoveis" class="tab-btn" onclick="switchTab('imoveis')">Imóveis</button>
+  </div>
+
+  <div id="section-clientes">
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Prospects</div><div class="stat-value blue" id="st-prospect">0</div></div>
+      <div class="stat"><div class="stat-label">Ativos</div><div class="stat-value green" id="st-ativo">0</div></div>
+      <div class="stat"><div class="stat-label">Fechados</div><div class="stat-value purple" id="st-fechado">0</div></div>
+      <div class="stat"><div class="stat-label">Perdidos</div><div class="stat-value red" id="st-perdido">0</div></div>
     </div>
+    <div class="toolbar">
+      <input type="text" id="search-clientes" placeholder="Buscar cliente..." oninput="renderClientes()">
+      <button class="add-btn" onclick="openModal('cliente')"><i class="ti ti-plus"></i> Novo Cliente</button>
+    </div>
+    <div class="list" id="list-clientes"></div>
   </div>
-  <div class="stats">
-    <div class="stat"><div class="stat-label">Prospects</div><div class="stat-value prospect" id="st-prospect">0</div></div>
-    <div class="stat"><div class="stat-label">Ativos</div><div class="stat-value ativo" id="st-ativo">0</div></div>
-    <div class="stat"><div class="stat-label">Fechados</div><div class="stat-value fechado" id="st-fechado">0</div></div>
-    <div class="stat"><div class="stat-label">Perdidos</div><div class="stat-value perdido" id="st-perdido">0</div></div>
+
+  <div id="section-imoveis" style="display:none">
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Disponíveis</div><div class="stat-value green" id="st-disp">0</div></div>
+      <div class="stat"><div class="stat-label">Reservados</div><div class="stat-value purple" id="st-res">0</div></div>
+      <div class="stat"><div class="stat-label">Vendidos</div><div class="stat-value red" id="st-vend">0</div></div>
+      <div class="stat"><div class="stat-label">Total</div><div class="stat-value blue" id="st-total-imovel">0</div></div>
+    </div>
+    <div class="toolbar">
+      <input type="text" id="search-imoveis" placeholder="Buscar por bairro ou título..." oninput="renderImoveis()">
+      <button class="add-btn" onclick="openModal('imovel')"><i class="ti ti-building"></i> Novo Imóvel</button>
+    </div>
+    <div class="list" id="list-imoveis"></div>
   </div>
-  <div class="toolbar">
-    <input type="text" id="search" placeholder="Buscar cliente..." oninput="render()">
-    <button class="filter-btn all active" onclick="setFilter('all',this)">Todos</button>
-    <button class="filter-btn prospect" onclick="setFilter('Prospect',this)">Prospect</button>
-    <button class="filter-btn ativo" onclick="setFilter('Ativo',this)">Ativo</button>
-    <button class="filter-btn fechado" onclick="setFilter('Fechado',this)">Fechado</button>
-    <button class="filter-btn perdido" onclick="setFilter('Perdido',this)">Perdido</button>
-    <button class="add-btn" onclick="openAdd()"><i class="ti ti-plus"></i> Novo cliente</button>
-  </div>
-  <div class="list" id="list"><div class="loading"><i class="ti ti-loader" style="font-size:24px;display:block;margin-bottom:8px"></i>Carregando dados...</div></div>
 </div>
 
-<div class="modal-overlay" id="modal-overlay">
+<div class="modal-overlay" id="modal-cliente">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-title">Novo cliente</span>
-      <button class="close-btn" onclick="closeModal()"><i class="ti ti-x"></i></button>
-    </div>
+    <div class="modal-header"><span style="font-weight:600" id="title-cliente">Novo Cliente</span><button onclick="closeModal('cliente')" style="border:none;background:none;cursor:pointer"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="row2">
-        <div class="field"><label>Nome completo</label><input id="f-nome" type="text" placeholder="Ana Silva"></div>
-        <div class="field"><label>Telefone / WhatsApp</label><input id="f-tel" type="text" placeholder="(11) 99999-0000"></div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="ana@email.com"></div>
-        <div class="field"><label>Origem</label>
-          <select id="f-origem">
-            <option value="">Selecione...</option>
-            <option>Indicação</option><option>Instagram</option><option>Site</option>
-            <option>WhatsApp</option><option>Portais (ZAP/OLX)</option><option>Outro</option>
-          </select>
+        <div class="row2">
+            <div class="field"><label>Nome</label><input id="c-nome" type="text"></div>
+            <div class="field"><label>Telefone</label><input id="c-tel" type="text"></div>
         </div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Status</label>
-          <select id="f-status">
-            <option>Prospect</option><option>Ativo</option><option>Fechado</option><option>Perdido</option>
-          </select>
+        <div class="row2">
+            <div class="field"><label>Status</label><select id="c-status"><option>Prospect</option><option>Ativo</option><option>Fechado</option><option>Perdido</option></select></div>
+            <div class="field"><label>Temperatura</label><select id="c-temp"><option>🔥 Quente</option><option>🌡️ Morno</option><option>❄️ Frio</option></select></div>
         </div>
-        <div class="field"><label>Temperatura</label>
-          <select id="f-temp">
-            <option>🔥 Quente</option><option>🌡️ Morno</option><option>❄️ Frio</option>
-          </select>
+        <div class="row2">
+            <div class="field"><label>Operação</label><select id="c-op"><option>Compra</option><option>Locação</option></select></div>
+            <div class="field"><label>Orçamento</label><input id="c-orcamento" type="text" placeholder="Ex: 500.000"></div>
         </div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Tipo de operação</label>
-          <select id="f-op">
-            <option>Compra</option><option>Locação</option><option>Compra ou Locação</option>
-          </select>
-        </div>
-        <div class="field"><label>Orçamento máximo</label><input id="f-orcamento" type="text" placeholder="R$ 500.000"></div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Bairro / Região desejada</label><input id="f-bairro" type="text" placeholder="Santana, Mooca..."></div>
-        <div class="field"><label>Quartos desejados</label>
-          <select id="f-quartos">
-            <option value="">Indiferente</option>
-            <option>1</option><option>2</option><option>3</option><option>4+</option>
-          </select>
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>Vaga de garagem</label>
-          <select id="f-vaga">
-            <option value="">Indiferente</option>
-            <option>Sem vaga</option><option>1 vaga</option><option>2+ vagas</option>
-          </select>
-        </div>
-        <div class="field"><label>Próximo follow-up</label><input id="f-followup" type="date"></div>
-      </div>
-      <div class="field"><label>Observações</label><textarea id="f-obs" placeholder="Preferências, histórico de visitas, anotações..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" onclick="saveClient()">Salvar</button>
+        <div class="field"><label>Bairro Desejado</label><input id="c-bairro" type="text"></div>
+        <div class="field"><label>Observações</label><textarea id="c-obs"></textarea></div>
+        <button class="add-btn" style="width:100%;justify-content:center" onclick="saveCliente()">Salvar Cliente</button>
     </div>
   </div>
 </div>
 
-<div class="detail-overlay" id="detail-overlay">
-  <div class="detail" id="detail-box"></div>
+<div class="modal-overlay" id="modal-imovel">
+  <div class="modal">
+    <div class="modal-header"><span style="font-weight:600" id="title-imovel">Novo Imóvel</span><button onclick="closeModal('imovel')" style="border:none;background:none;cursor:pointer"><i class="ti ti-x"></i></button></div>
+    <div class="modal-body">
+        <div class="field"><label>Título do Imóvel</label><input id="i-titulo" type="text" placeholder="Ex: Apto 2 dorms Santana"></div>
+        <div class="row2">
+            <div class="field"><label>Bairro</label><input id="i-bairro" type="text"></div>
+            <div class="field"><label>Valor</label><input id="i-valor" type="text"></div>
+        </div>
+        <div class="row2">
+            <div class="field"><label>Operação</label><select id="i-op"><option>Compra</option><option>Locação</option></select></div>
+            <div class="field"><label>Status</label><select id="i-status"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
+        </div>
+        <div class="row2">
+            <div class="field"><label>Quartos</label><input id="i-quartos" type="number"></div>
+            <div class="field"><label>Vagas</label><input id="i-vagas" type="number"></div>
+        </div>
+        <div class="field"><label>Descrição / Detalhes</label><textarea id="i-desc"></textarea></div>
+        <button class="add-btn" style="width:100%;justify-content:center" onclick="saveImovel()">Salvar Imóvel</button>
+    </div>
+  </div>
 </div>
 
-<div class="toast-container">
-  <div class="toast" id="toast"></div>
-</div>
+<div class="toast-container"><div class="toast" id="toast"></div></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
 
 <script>
-// Configuração com as suas chaves reais
+// CONFIGURAÇÃO DO SEU FIREBASE (MANTENHA AS SUAS CHAVES AQUI)
 const firebaseConfig = {
   apiKey: "AIzaSyBPqv0gnRvkb9FvEJOVb2OI3g3CkRITsjQ",
   authDomain: "crm-corretora-85045.firebaseapp.com",
@@ -207,216 +169,141 @@ const firebaseConfig = {
   projectId: "crm-corretora-85045",
   storageBucket: "crm-corretora-85045.firebasestorage.app",
   messagingSenderId: "344026315552",
-  appId: "1:344026315552:web:c5a0f9d93fd9b9b6bfb545",
-  measurementId: "G-JPBPHX6764"
+  appId: "1:344026315552:web:c5a0f9d93fd9b9b6bfb545"
 };
 
-// Inicializa o Firebase
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+const db = firebase.database();
 
-let clients=[];
-let editId=null;
-let filter='all';
-let nextId=1;
+let clientes = [];
+let imoveis = [];
+let currentTab = 'clientes';
 
-const initials=n=>n.split(' ').slice(0,2).map(x=>x[0]||'').join('').toUpperCase();
-const avClass=s=>({Prospect:'av-prospect',Ativo:'av-ativo',Fechado:'av-fechado',Perdido:'av-perdido'}[s]||'av-prospect');
-const badgeClass=s=>s.toLowerCase();
-
-function showToast(msg,ok=true){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.background=ok?'#27500A':'#791F1F';
-  t.style.color=ok?'#EAF3DE':'#FCEBEB';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+// Alternar entre abas
+function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('section-clientes').style.display = tab === 'clientes' ? 'block' : 'none';
+    document.getElementById('section-imoveis').style.display = tab === 'imoveis' ? 'block' : 'none';
+    
+    document.getElementById('tab-btn-clientes').classList.toggle('active', tab === 'clientes');
+    document.getElementById('tab-btn-imoveis').classList.toggle('active', tab === 'imoveis');
 }
 
-function setSaveIndicator(state){
-  const el=document.getElementById('save-indicator');
-  if(state==='saving'){el.innerHTML='<i class="ti ti-loader"></i> Sincronizando...';}
-  else if(state==='saved'){el.innerHTML='<i class="ti ti-cloud-check"></i> Nuvem atualizada';}
-  else{el.innerHTML='<i class="ti ti-cloud-off"></i> Erro na nuvem';}
+// Persistência
+function saveToFirebase(node, data) {
+    db.ref(node).set(data);
 }
 
-// Persistência no Firebase
-async function persist(){
-  setSaveIndicator('saving');
-  try{
-    await database.ref('crm_clientes').set({clients, nextId});
-    setTimeout(() => setSaveIndicator('saved'), 300);
-  }catch(e){
-    setSaveIndicator('error');
-    showToast('Erro ao salvar dados', false);
-  }
+// Carregar Dados
+function loadAll() {
+    db.ref('crm_clientes').on('value', snap => {
+        clientes = snap.val() || [];
+        renderClientes();
+    });
+    db.ref('crm_imoveis').on('value', snap => {
+        imoveis = snap.val() || [];
+        renderImoveis();
+    });
 }
 
-// Carregamento em tempo real do Firebase
-function loadData(){
-  setSaveIndicator('saving');
-  
-  database.ref('crm_clientes').on('value', (snapshot) => {
-    const data = snapshot.val();
-    if(data){
-      clients = data.clients || [];
-      nextId = data.nextId || clients.length + 1;
-    }else{
-      clients = [];
-      nextId = 1;
+// CRUD CLIENTES
+function renderClientes() {
+    const list = document.getElementById('list-clientes');
+    const search = document.getElementById('search-clientes').value.toLowerCase();
+    const filtered = clientes.filter(c => c.nome.toLowerCase().includes(search) || c.bairro.toLowerCase().includes(search));
+    
+    // Atualiza stats
+    const count = {Prospect:0, Ativo:0, Fechado:0, Perdido:0};
+    clientes.forEach(c => count[c.status]++);
+    document.getElementById('st-prospect').textContent = count.Prospect;
+    document.getElementById('st-ativo').textContent = count.Ativo;
+    document.getElementById('st-fechado').textContent = count.Fechado;
+    document.getElementById('st-perdido').textContent = count.Perdido;
+
+    list.innerHTML = filtered.map((c, i) => `
+        <div class="card">
+            <div style="flex:1">
+                <div style="font-weight:600">${c.nome}</div>
+                <div style="font-size:12px; color:var(--color-text-secondary)">${c.bairro} • ${c.op} • R$ ${c.orcamento}</div>
+            </div>
+            <div class="badge">${c.status}</div>
+            <button onclick="deleteData('clientes', ${i})" style="border:none;background:none;color:#A32D2D"><i class="ti ti-trash"></i></button>
+        </div>
+    `).join('');
+}
+
+function saveCliente() {
+    const novo = {
+        nome: document.getElementById('c-nome').value,
+        tel: document.getElementById('c-tel').value,
+        status: document.getElementById('c-status').value,
+        temp: document.getElementById('c-temp').value,
+        op: document.getElementById('c-op').value,
+        orcamento: document.getElementById('c-orcamento').value,
+        bairro: document.getElementById('c-bairro').value,
+        obs: document.getElementById('c-obs').value
+    };
+    clientes.push(novo);
+    saveToFirebase('crm_clientes', clientes);
+    closeModal('cliente');
+}
+
+// CRUD IMÓVEIS
+function renderImoveis() {
+    const list = document.getElementById('list-imoveis');
+    const search = document.getElementById('search-imoveis').value.toLowerCase();
+    const filtered = imoveis.filter(i => i.titulo.toLowerCase().includes(search) || i.bairro.toLowerCase().includes(search));
+
+    const count = {Disponível:0, Reservado:0, Vendido:0};
+    imoveis.forEach(i => count[i.status]++);
+    document.getElementById('st-disp').textContent = count.Disponível;
+    document.getElementById('st-res').textContent = count.Reservado;
+    document.getElementById('st-vend').textContent = count.Vendido;
+    document.getElementById('st-total-imovel').textContent = imoveis.length;
+
+    list.innerHTML = filtered.map((im, index) => `
+        <div class="card">
+            <div style="flex:1">
+                <div style="font-weight:600">${im.titulo}</div>
+                <div style="font-size:12px; color:var(--color-text-secondary)">${im.bairro} • R$ ${im.valor} • ${im.quartos} qtos</div>
+            </div>
+            <div class="badge badge-${im.status.toLowerCase()}">${im.status}</div>
+            <button onclick="deleteData('imoveis', ${index})" style="border:none;background:none;color:#A32D2D"><i class="ti ti-trash"></i></button>
+        </div>
+    `).join('');
+}
+
+function saveImovel() {
+    const novo = {
+        titulo: document.getElementById('i-titulo').value,
+        bairro: document.getElementById('i-bairro').value,
+        valor: document.getElementById('i-valor').value,
+        op: document.getElementById('i-op').value,
+        status: document.getElementById('i-status').value,
+        quartos: document.getElementById('i-quartos').value,
+        vagas: document.getElementById('i-vagas').value,
+        desc: document.getElementById('i-desc').value
+    };
+    imoveis.push(novo);
+    saveToFirebase('crm_imoveis', imoveis);
+    closeModal('imovel');
+}
+
+// Auxiliares
+function openModal(m) { document.getElementById('modal-'+m).style.display = 'flex'; }
+function closeModal(m) { document.getElementById('modal-'+m).style.display = 'none'; }
+function deleteData(type, index) {
+    if(!confirm('Deseja excluir?')) return;
+    if(type === 'clientes') {
+        clientes.splice(index, 1);
+        saveToFirebase('crm_clientes', clientes);
+    } else {
+        imoveis.splice(index, 1);
+        saveToFirebase('crm_imoveis', imoveis);
     }
-    render();
-    setSaveIndicator('saved');
-  });
 }
 
-function setFilter(f,btn){
-  filter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  render();
-}
-
-function render(){
-  const q=(document.getElementById('search')||{}).value||'';
-  const today=new Date().toISOString().split('T')[0];
-  const filtered=clients.filter(c=>{
-    if(filter!=='all'&&c.status!==filter)return false;
-    if(q&&!c.nome.toLowerCase().includes(q.toLowerCase())&&!(c.bairro||'').toLowerCase().includes(q.toLowerCase()))return false;
-    return true;
-  }).sort((a,b)=>{
-    if(a.followup&&b.followup)return a.followup.localeCompare(b.followup);
-    if(a.followup)return -1;
-    if(b.followup)return 1;
-    return 0;
-  });
-  
-  const counts={Prospect:0,Ativo:0,Fechado:0,Perdido:0};
-  clients.forEach(c=>counts[c.status]=(counts[c.status]||0)+1);
-  
-  document.getElementById('st-prospect').textContent=counts.Prospect;
-  document.getElementById('st-ativo').textContent=counts.Ativo;
-  document.getElementById('st-fechado').textContent=counts.Fechado;
-  document.getElementById('st-perdido').textContent=counts.Perdido;
-  document.getElementById('total-label').textContent=clients.length+' cliente'+(clients.length!==1?'s':'');
-  
-  const list=document.getElementById('list');
-  if(!filtered.length){
-    list.innerHTML='<div class="empty"><i class="ti ti-users" style="font-size:32px;display:block;margin-bottom:8px"></i>Nenhum cliente encontrado</div>';
-    return;
-  }
-  list.innerHTML=filtered.map(c=>{
-    const duehoy=c.followup&&c.followup<=today&&c.status!=='Fechado'&&c.status!=='Perdido';
-    return`<div class="card" onclick="openDetail(${c.id})">
-      <div class="avatar ${avClass(c.status)}">${initials(c.nome)}</div>
-      <div class="card-info">
-        <div class="card-name">${c.nome}</div>
-        <div class="card-sub"><i class="ti ti-map-pin" style="font-size:12px"></i> ${c.bairro||'—'} · ${c.op} · ${c.orcamento||'—'}</div>
-      </div>
-      <div class="card-meta">
-        ${duehoy?`<span class="followup-tag">⏰ Follow-up</span>`:''}
-        <span style="font-size:13px">${c.temp.split(' ')[0]}</span>
-        <span class="badge ${badgeClass(c.status)}">${c.status}</span>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function openAdd(){
-  editId=null;
-  document.getElementById('modal-title').textContent='Novo cliente';
-  ['nome','tel','email','origem','status','temp','op','orcamento','bairro','quartos','vaga','followup','obs'].forEach(k=>{
-    const el=document.getElementById('f-'+k);
-    if(el)el.value=k==='status'?'Prospect':k==='temp'?'🔥 Quente':'';
-  });
-  document.getElementById('modal-overlay').style.display='flex';
-}
-
-function closeModal(){document.getElementById('modal-overlay').style.display='none';}
-
-async function saveClient(){
-  const get=id=>document.getElementById('f-'+id).value;
-  const nome=get('nome').trim();
-  if(!nome){alert('Informe o nome do cliente');return;}
-  
-  const data={nome,tel:get('tel'),email:get('email'),origem:get('origem'),status:get('status'),temp:get('temp'),op:get('op'),orcamento:get('orcamento'),bairro:get('bairro'),quartos:get('quartos'),vaga:get('vaga'),followup:get('followup'),obs:get('obs')};
-  
-  if(editId){
-    const idx=clients.findIndex(c=>c.id===editId);
-    if(idx>-1)clients[idx]={...clients[idx],...data};
-    showToast('Cliente atualizado!');
-  }else{
-    clients.push({id:nextId++,...data});
-    showToast('Cliente adicionado!');
-  }
-  closeModal();
-  await persist();
-}
-
-function openDetail(id){
-  const c=clients.find(x=>x.id===id);
-  if(!c)return;
-  const fmt=d=>d?new Date(d+'T00:00:00').toLocaleDateString('pt-BR'):'—';
-  document.getElementById('detail-box').innerHTML=`
-    <div class="detail-top">
-      <div class="detail-av ${avClass(c.status)}">${initials(c.nome)}</div>
-      <div style="flex:1">
-        <div class="detail-name">${c.nome}</div>
-        <div style="margin-top:4px;display:flex;gap:8px;align-items:center"><span class="badge ${badgeClass(c.status)}">${c.status}</span><span style="font-size:14px">${c.temp}</span></div>
-      </div>
-      <button class="close-btn" onclick="closeDetail()"><i class="ti ti-x"></i></button>
-    </div>
-    <div class="detail-section">
-      <div class="detail-section-title">Contato</div>
-      <div class="detail-row"><i class="ti ti-phone"></i><span class="detail-label">Telefone</span><span class="detail-val">${c.tel||'—'}</span></div>
-      <div class="detail-row"><i class="ti ti-mail"></i><span class="detail-label">Email</span><span class="detail-val">${c.email||'—'}</span></div>
-      <div class="detail-row"><i class="ti ti-speakerphone"></i><span class="detail-label">Origem</span><span class="detail-val">${c.origem||'—'}</span></div>
-    </div>
-    <div class="detail-section">
-      <div class="detail-section-title">Preferências</div>
-      <div class="detail-row"><i class="ti ti-home"></i><span class="detail-label">Operação</span><span class="detail-val">${c.op||'—'}</span></div>
-      <div class="detail-row"><i class="ti ti-currency-dollar"></i><span class="detail-label">Orçamento</span><span class="detail-val">${c.orcamento||'—'}</span></div>
-      <div class="detail-row"><i class="ti ti-map-pin"></i><span class="detail-label">Região</span><span class="detail-val">${c.bairro||'—'}</span></div>
-      <div class="detail-row"><i class="ti ti-bed"></i><span class="detail-label">Quartos</span><span class="detail-val">${c.quartos||'Indiferente'}</span></div>
-      <div class="detail-row"><i class="ti ti-car"></i><span class="detail-label">Garagem</span><span class="detail-val">${c.vaga||'Indiferente'}</span></div>
-    </div>
-    <div class="detail-section">
-      <div class="detail-section-title">Acompanhamento</div>
-      <div class="detail-row"><i class="ti ti-calendar"></i><span class="detail-label">Follow-up</span><span class="detail-val">${fmt(c.followup)}</span></div>
-      <div class="detail-row"><i class="ti ti-note"></i><span class="detail-label">Obs.</span><span class="detail-val" style="white-space:pre-wrap">${c.obs||'—'}</span></div>
-    </div>
-    <div class="detail-actions">
-      <button class="btn-edit" onclick="openEdit(${c.id})"><i class="ti ti-edit"></i> Editar</button>
-      ${c.tel?`<a href="https://wa.me/55${c.tel.replace(/\D/g,'')}" target="_blank" class="btn-wa"><i class="ti ti-brand-whatsapp"></i> WhatsApp</a>`:''}
-      <button class="btn-delete" onclick="deleteClient(${c.id})"><i class="ti ti-trash"></i> Remover</button>
-    </div>`;
-  document.getElementById('detail-overlay').style.display='flex';
-}
-
-function closeDetail(){document.getElementById('detail-overlay').style.display='none';}
-
-function openEdit(id){
-  closeDetail();
-  editId=id;
-  const c=clients.find(x=>x.id===id);
-  if(!c)return;
-  document.getElementById('modal-title').textContent='Editar cliente';
-  ['nome','tel','email','origem','status','temp','op','orcamento','bairro','quartos','vaga','followup','obs'].forEach(k=>{
-    const el=document.getElementById('f-'+k);
-    if(el)el.value=c[k]||'';
-  });
-  document.getElementById('modal-overlay').style.display='flex';
-}
-
-async function deleteClient(id){
-  if(!confirm('Remover este cliente permanentemente?'))return;
-  clients=clients.filter(c=>c.id!==id);
-  closeDetail();
-  await persist();
-  showToast('Cliente removido');
-}
-
-loadData();
+loadAll();
 </script>
 </body>
 </html>
